@@ -24,6 +24,17 @@
 	)
 )
 
+;Removes the next set of items from the list
+;It seems that LISP does not have a built in function
+;for this so I am going to write my own recusive and compeletely
+;inefficent function to do this
+(DEFUN REMOVEITEMS (l num)
+	(COND
+		((EQUAL 0 num) l)
+		(T (REMOVEITEMS (REST l) (- num 1)))
+	)
+)
+
 (DEFUN DECODE (l)
 	(l)
 )

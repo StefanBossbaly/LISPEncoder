@@ -13,7 +13,12 @@
 
 ;Helper function for our encode function
 (DEFUN ENCODE_REC (l)
-	(l)
+	(PRINT (FIRST l))
+	(COND
+		((EQUAL (FIRST l) NIL) l)
+		((EQUAL (NUMOFCONITEMS l (FIRST l)) 0) (ENCODE_REC (REST l)))
+		(T (ENCODE_REC (REMOVEITEMS l (NUMOFCONITEMS l (FIRST l)))))
+	)
 )
 
 ;Counts the number of consecutive items in the list

@@ -6,8 +6,8 @@
 (DEFUN ENCODE (l)
 	(COND 
 		((NULL l) 'NullListException)
-		((NOT (ENCODED l)) 'NotEncodedListException)
-		(T (ENCODE_REC (REST l)))
+		((NOT (LISTP l)) 'NotListException)
+		(T (ENCODE_REC l))
 	)
 )
 

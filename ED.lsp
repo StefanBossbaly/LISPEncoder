@@ -31,16 +31,16 @@
 			;Create the tag and append it to the end of the list
 			
 			;Remove them from the list
-			(SET 'CLEAN-LIST (REMOVEITEMS l (NUMOFCONITEMS l (FIRST l))))
+			;(SET 'CLEAN-LIST (REMOVEITEMS l (NUMOFCONITEMS l (FIRST l))))
 
-			(APPEND 'TEST (ENCODE_REC (REST l))
+			;(APPEND 'TEST (ENCODE_REC (REST l))
 		)
 	)
 )
 
 ;Returns the tag for the list
 (DEFUN GENTAG (item num)
-	(APPEND (CONS 'TAG item) num)
+	(CONS 'TAG (CONS item (CONS num ())))
 )
 
 ;Counts the number of consecutive items in the list

@@ -23,7 +23,7 @@
 		((EQUAL (FIRST l) NIL) NIL)
 
 		;If there are no consecutive items just keep going on
-		((EQUAL (NUMOFCONITEMS l (FIRST l)) 0) (APPEND (FIRST l) (ENCODE_REC (REST l))))
+		((EQUAL (NUMOFCONITEMS l (FIRST l)) 1) (APPEND (CONS (FIRST l) ()) (ENCODE_REC (REST l))))
 
 		;We have consecutive items so lets process them
 		(T

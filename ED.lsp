@@ -6,10 +6,10 @@
 (DEFUN ENCODE (l)
 	(COND 
 		;List can not be nil
-		((NULL l) 'NullListException)
+		((NULL l) 'Null-List-Exception)
 		
 		;Make sure we have a list
-		((NOT (LISTP l)) 'NotListException)
+		((NOT (LISTP l)) 'Not-List-Exception)
 
 		;Call the helper function
 		(T (ENCODE_REC l))

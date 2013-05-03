@@ -44,7 +44,10 @@
 ;Counts the number of consecutive items in the list
 (DEFUN NUMOFCONITEMS (l item)
 	(COND
+		;If the first of the list equals the item
 		((EQUAL (FIRST l) item) (+ 1 (NUMOFCONITEMS (REST l) item)))
+		
+		;Base case return 0
 		(T 0)
 	)
 )

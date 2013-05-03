@@ -35,7 +35,7 @@
 
 ;Returns the tag for the list
 (DEFUN GENTAG (item num)
-	(CONS 'TAG (CONS item (CONS num ())))
+	(CONS (CONS 'TAG (CONS item (CONS num ()))) ())
 )
 
 ;Skips ahead in the list

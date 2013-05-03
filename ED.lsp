@@ -5,8 +5,13 @@
 ;Encoded the list
 (DEFUN ENCODE (l)
 	(COND 
+		;List can not be nil
 		((NULL l) 'NullListException)
+		
+		;Make sure we have a list
 		((NOT (LISTP l)) 'NotListException)
+
+		;Call the helper function
 		(T (ENCODE_REC l))
 	)
 )
@@ -14,17 +19,20 @@
 ;Helper function for our encode function
 (DEFUN ENCODE_REC (l)
 	(COND
-		((EQUAL (FIRST l) NIL) l)
+		;We are at the end of the list so just return nil
+		((EQUAL (FIRST l) NIL) NIL)
+
+		;If there are no consecutive items just keep going on
 		((EQUAL (NUMOFCONITEMS l (FIRST l)) 0) (ENCODE_REC (REST l)))
+
+		;We have consecutive items so lets process them
 		(T
+			
+			;Create the tag and append it to the end of the list
 			;Remove them from the list
 			(SET 'CLEAN-LIST (REMOVEITEMS l (NUMOFCONITEMS l (FIRST l))))
 
-			(PRINT CLEAN-LIST)
-
-			(PRINT (FIRST l))
-			(PRINT (NUMOFCONITEMS l (FIRST l)))
-			;(APPEND CLEAN-LIST (ENCODE_REC (REST CLEAN-LIST)))
+			(APPEND 'TEST (ENCODE_REC (REST l))
 		)
 	)
 )

@@ -23,7 +23,7 @@
 		((EQUAL (FIRST l) NIL) NIL)
 
 		;If there are no consecutive items just keep going on
-		((EQUAL (NUMOFCONITEMS l (FIRST l)) 0) (ENCODE_REC (REST l)))
+		((EQUAL (NUMOFCONITEMS l (FIRST l)) 0) (APPEND (FIRST l) (ENCODE_REC (REST l))))
 
 		;We have consecutive items so lets process them
 		(T
@@ -36,6 +36,17 @@
 ;Returns the tag for the list
 (DEFUN GENTAG (item num)
 	(CONS 'TAG (CONS item (CONS num ())))
+)
+
+;Skips ahead in the list
+(DEFUN SKIP (l items)
+	(COND
+		;Keep going cause the party doesn't stop until we hit zero
+		((NOT (EQUAL items 0)) (SKIP (REST l) (- items 1)))
+		
+		;Base case return the list
+		(T l)
+	)
 )
 
 ;Counts the number of consecutive items in the list

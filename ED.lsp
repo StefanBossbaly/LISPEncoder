@@ -28,7 +28,7 @@
 		;We have consecutive items so lets process them
 		(T
 			;Create the tag and append it to the front of the list and recursively call the ecode function on the rest of the list
-			(APPEND (GENTAG (FIRST l) (NUMOFCONITEMS l (FIRST l))) (ENCODE_REC (REST l)))
+			(APPEND (GENTAG (FIRST l) (NUMOFCONITEMS l (FIRST l))) (ENCODE_REC (SKIP l (NUMOFCONITEMS l (FIRST l)))))
 		)
 	)
 )

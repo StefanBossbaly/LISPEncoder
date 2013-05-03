@@ -29,6 +29,7 @@
 		(T
 			
 			;Create the tag and append it to the end of the list
+			
 			;Remove them from the list
 			(SET 'CLEAN-LIST (REMOVEITEMS l (NUMOFCONITEMS l (FIRST l))))
 
@@ -37,9 +38,10 @@
 	)
 )
 
-;(DEFUN INSERTTAG (l item num)
-;	('TAG item num)
-;)
+;Returns the tag for the list
+(DEFUN GENTAG (item num)
+	(APPEND (CONS 'TAG item) num)
+)
 
 ;Counts the number of consecutive items in the list
 (DEFUN NUMOFCONITEMS (l item)

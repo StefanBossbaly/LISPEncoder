@@ -16,17 +16,31 @@
 
 ;Helper function for our encode function
 (DEFUN ENCODE_REC (l)
-	(COND
-		;We are at the end of the list so just return nil
-		((EQUAL (FIRST l) NIL) NIL)
+	
+	;Check to see if we have a nested list
+	(IF (LISTP (FIRST l))
+		;We do have a nested list
+		(COND
+			;Make sure that it isn't just the NIL value
+			((EQUAL (FIRST l) NIL) NIL)
+			
+			;Get the encoding of the nested list and continue
+			(T (APPEND (CONS (ENCODE_REC (FIRST l)) NIL) (ENCODE_REC (REST l))))
+		)
 
-		;If there are no consecutive items just keep going on
-		((EQUAL (NUMOFCONITEMS l (FIRST l)) 1) (APPEND (CONS (FIRST l) ()) (ENCODE_REC (REST l))))
+		;We don't have a nested list
+		(COND
+			;We are at the end of the list so just return nil
+			((EQUAL (FIRST l) NIL) NIL)
 
-		;We have consecutive items so lets process them
-		(T
-			;Create the tag and append it to the front of the list and recursively call the ecode function on the rest of the list
-			(APPEND (GENTAG (FIRST l) (NUMOFCONITEMS l (FIRST l))) (ENCODE_REC (SKIP l (NUMOFCONITEMS l (FIRST l)))))
+			;If there are no consecutive items just keep going on
+			((EQUAL (NUMOFCONITEMS l (FIRST l)) 1) (APPEND (CONS (FIRST l) ()) (ENCODE_REC (REST l))))
+
+			;We have consecutive items so lets process them
+			(T
+				;Create the tag and append it to the front of the list and recursively call the ecode function on the rest of the list
+				(APPEND (GENTAG (FIRST l) (NUMOFCONITEMS l (FIRST l))) (ENCODE_REC (SKIP l (NUMOFCONITEMS l (FIRST l)))))
+			)
 		)
 	)
 )

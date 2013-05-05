@@ -88,17 +88,30 @@
 
 ;Decode helper function
 (DEFUN DECODE_REC (l)
-	(COND
-		;We are at the end of the list so just return nil
-		((EQUAL (FIRST l) NIL) NIL)
 
-		;If the element is a tag then explode the tag and recurse
-		((ISTAG (FIRST l)) (APPEND (EXPLODETAG (FIRST l)) (DECODE_REC (REST l))))
+	;Check to see if the first element is a list but is not a tag element
+	(IF (AND (LISTP (FIRST l)) (NOT (ISTAG (FIRST l))))
+		;It is a nested list
+		(COND 
+			;Make sure it isn't just the end of the list
+			((EQUAL (FIRST l) NIL) NIL)
 
-		;Just explore the rest of the list
-		(T (APPEND (CONS (FIRST l) ()) (DECODE_REC (REST l))))
+			;Decode the nested list and carry out with recursion
+			(T (APPEND (CONS (DECODE_REC (FIRST l)) NIL) (DECODE_REC (REST l))))
+		)
+		
+		;It is not a nested list
+		(COND
+			;We are at the end of the list so just return nil
+			((EQUAL (FIRST l) NIL) NIL)
+
+			;If the element is a tag then explode the tag and recurse
+			((ISTAG (FIRST l)) (APPEND (EXPLODETAG (FIRST l)) (DECODE_REC (REST l))))
+
+			;Just explore the rest of the list
+			(T (APPEND (CONS (FIRST l) ()) (DECODE_REC (REST l))))
+		)
 	)
-
 )
 
 ;Check to see if the list is a tag element

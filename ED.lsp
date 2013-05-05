@@ -66,6 +66,32 @@
 )
 
 (DEFUN DECODE_REC (l)
-	
+	(COND
+		;We are at the end of the list so just return nil
+		((EQUAL (FIRST l) NIL) NIL)
 
+		;SE
+		((ISTAG (FIRST l)) (APPEND (EXPLODETAG (FIRST l)) (DECODE_REC (REST l))))
+
+		(T (APPEND (CONS (FIRST l) ()) (DECODE_REC (REST l))))
+	)
+
+)
+
+(DEFUN ISTAG (l)
+	(COND
+		((NOT (LISTP l)) NIL)
+		(T (EQUAL 'TAG (FIRST l)))
+	)
+)
+
+(DEFUN EXPLODETAG (l)
+	(EXPLODETAG_REC (FIRST (REST l)) (FIRST (REST (REST l))) 0)
+)
+
+(DEFUN EXPLODETAG_REC (item times counter)
+	(COND 
+		((EQUAL times counter) NIL)
+		(T (CONS item (EXPLODETAG_REC item times (+ 1 counter))))
+	)
 )

@@ -57,21 +57,15 @@
 	)
 )
 
-;Removes the next set of items from the list
-;It seems that LISP does not have a built in function
-;for this so I am going to write my own recusive and compeletely
-;inefficent function to do this
-(DEFUN REMOVEITEMS (l num)
-	(COND
-		((EQUAL 0 num) l)
-		(T (REMOVEITEMS (REST l) (- num 1)))
+(DEFUN DECODE (l)
+	(COND 
+		((NOT (LISTP l)) 'Not-List-Exception)
+		((NOT (ENCODED l)) 'Not-Encoded-List-Exception)
+		(T (DECODE_REC (REST l)))
 	)
 )
 
-(DEFUN DECODE (l)
-	(COND 
-		((NULL l) 'NullListException)
-		((NOT (ENCODED l)) 'NotEncodedListException)
-		(T (ENCODE_REC (REST l)))
-	)
+(DEFUN DECODE_REC (l)
+	
+
 )

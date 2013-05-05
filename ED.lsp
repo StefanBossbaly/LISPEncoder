@@ -1,3 +1,4 @@
+;Sees if the list is encoded
 (DEFUN ENCODED (l)
 	(AND (LISTP l) (EQ (FIRST l) 'E) (LISTP (REST l)))
 )
@@ -57,41 +58,59 @@
 	)
 )
 
+;Decodes a list that was encoded using ENCODE
 (DEFUN DECODE (l)
 	(COND 
+		;If is not a list then return an error
 		((NOT (LISTP l)) 'Not-List-Exception)
+
+		;If the list is not encoded then return an error
 		((NOT (ENCODED l)) 'Not-Encoded-List-Exception)
+
+		;Call the helper function
 		(T (DECODE_REC (REST l)))
 	)
 )
 
+;Decode helper function
 (DEFUN DECODE_REC (l)
 	(COND
 		;We are at the end of the list so just return nil
 		((EQUAL (FIRST l) NIL) NIL)
 
-		;SE
+		;If the element is a tag then explode the tag and recurse
 		((ISTAG (FIRST l)) (APPEND (EXPLODETAG (FIRST l)) (DECODE_REC (REST l))))
 
+		;Just explore the rest of the list
 		(T (APPEND (CONS (FIRST l) ()) (DECODE_REC (REST l))))
 	)
 
 )
 
+;Check to see if the list is a tag element
 (DEFUN ISTAG (l)
 	(COND
+		;If the element is not a list than it can not be a tag element
 		((NOT (LISTP l)) NIL)
+
+		;Make sure the first element of the list is  "TAG"
 		(T (EQUAL 'TAG (FIRST l)))
 	)
 )
 
+;Explodes the tag to a decoded list representation
 (DEFUN EXPLODETAG (l)
+	;Call our helper function
 	(EXPLODETAG_REC (FIRST (REST l)) (FIRST (REST (REST l))) 0)
 )
 
+;Recursive helper function
 (DEFUN EXPLODETAG_REC (item times counter)
 	(COND 
+		;If the counter is equal to times then end the recursion
 		((EQUAL times counter) NIL)
+
+		;Add the item to the list, increment the counter and continue recursion
 		(T (CONS item (EXPLODETAG_REC item times (+ 1 counter))))
 	)
 )
